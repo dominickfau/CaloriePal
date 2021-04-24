@@ -5,6 +5,7 @@ import tkinter.messagebox as messagebox
 from tkinter import filedialog
 import json
 from caloriePal import CaloriePal, ServingUom, Food
+import staticVariables
 
 
 class GUI:
@@ -12,6 +13,7 @@ class GUI:
     PROGRAM_NAME = "Calorie Pal"
     FLOAT_START = 0.0
     START = 0
+    PROGRAM_ICON = staticVariables.PROGRAM_ICON
 
     def __init__(self, parentWindow, calPal):
         self.mainWindow = parentWindow
@@ -20,8 +22,8 @@ class GUI:
 
         self.font = ("TkDefaultFont", 16, "normal")
 
-        self.mainWindowHeight = 75
-        self.mainWindowWidth = 480
+        self.mainWindowHeight = 85
+        self.mainWindowWidth = 525
 
         self.foodWindowHeight = 400
         self.foodWindowWidth = 675
@@ -35,10 +37,12 @@ class GUI:
         self.helpWindowHeight = 100
         self.helpWindowWidth = 475
 
-        self.rawFoodDataWindowHeight = 550
-        self.rawFoodDataWindowWidth = 600
+        self.rawFoodDataWindowHeight = 700
+        self.rawFoodDataWindowWidth = 700
 
         self.mainWindow.title(self.PROGRAM_NAME)
+        self.icon = PhotoImage(data = GUI.PROGRAM_ICON)
+        self.mainWindow.iconphoto(True, self.icon)
         self.mainWindow.geometry(f"{self.mainWindowWidth}x{self.mainWindowHeight}")
         self.mainWindow.minsize(self.mainWindowWidth, self.mainWindowHeight)
 
