@@ -1,0 +1,9 @@
+__pycache__/
+.vscode/
+Output/
+*/__pycache__/
+*.ini
+*Log.txt
+*.json
+*.csv
+.DS_Store
