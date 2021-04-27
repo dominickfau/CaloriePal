@@ -6,6 +6,12 @@ class ServingUom(object):
     REQUIRED_KEYS = ["name", "code"]
 
     def __init__(self, name, code):
+        """Creates a new ServingUom object.
+
+        Args:
+            name (string): Name for the UOM.
+            code (string)): UOM abbreviation.
+        """
         self.name = name
         self.code = code
 
@@ -26,9 +32,12 @@ class ServingUom(object):
         if not isinstance(data, dict):
             raise TypeError("data must be of type dict().")
         
+        missingKeys = []
         for requiredKey in cls.REQUIRED_KEYS:
             if requiredKey not in data.keys():
-                raise KeyError(f"Missing required key '{requiredKey}'")
+                missingKeys.append(requiredKey)
+        
+        if len(missingKeys) > 0: raise KeyError(f"Missing required key(s) '{missingKeys}'")
 
         name = data['name']
         code = data['code']
@@ -120,9 +129,12 @@ class Food(object):
         if not isinstance(data, dict):
             raise TypeError("data must be of type dict().")
         
+        missingKeys = []
         for requiredKey in cls.REQUIRED_KEYS:
             if requiredKey not in data.keys():
-                raise KeyError(f"Missing required key '{requiredKey}'")
+                missingKeys.append(requiredKey)
+        
+        if len(missingKeys) > 0: raise KeyError(f"Missing required key '{missingKeys}'")
 
         barcode = data['barcode']
         description = data['description']
@@ -302,6 +314,7 @@ class CaloriePal(object):
 
     def changeFoodDataFile(self, newFilePath):
         """Changes food data file path and try's to reload file from new path.
+            If new file reload is unsuccessful, reverts back to the previous file.
 
         Args:
             newFilePath (string): Path to the new data file.
@@ -340,11 +353,6 @@ class CaloriePal(object):
         else:
             self.settings["foodDataSaveLocation"] = newFilePath
             return (True, msg)
-
-
-
-
-
 
     def addFood(self, food):
         """Adds a new food to database.
@@ -402,6 +410,10 @@ class CaloriePal(object):
         Returns:
             Food Object: Returns Food object matching barcode. Returns None if not found.
         """
+        barcode = barcode.strip()
+
+        if len(barcode) <= 0: return None
+
         if barcode in self.foodData:
             return self.foodData[barcode]
         else:
@@ -416,6 +428,10 @@ class CaloriePal(object):
         Returns:
             ServingUom: Returns ServingUom object matching name. Returns None if not found.
         """
+        uomName = uomName.strip()
+        
+        if len(uomName) <= 0: return None
+
         foundUom = None
 
         for x, uom in enumerate(self.servingUoms):
@@ -426,6 +442,7 @@ class CaloriePal(object):
         return foundUom
 
     def addUom(self, uom):
+        #TODO: Add UOM coversion.
         if not isinstance(uom, ServingUom): raise TypeError("Must be of class ServingUom()")
         self.servingUoms.append(uom)
         return
