@@ -10,7 +10,7 @@ import staticVariables
 
 class GUI:
     VERSION = "0.0.1"
-    PROGRAM_NAME = "Calorie Pal"
+    PROGRAM_NAME = f"Calorie Pal {VERSION}"
     FLOAT_START = 0.0
     START = 0
     PROGRAM_ICON = staticVariables.PROGRAM_ICON
