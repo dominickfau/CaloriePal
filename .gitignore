@@ -1,6 +1,7 @@
 __pycache__/
 .vscode/
 Output/
+venv/
 */__pycache__/
 *.ini
 *Log.txt
